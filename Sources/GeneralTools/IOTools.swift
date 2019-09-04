@@ -7,7 +7,9 @@
 
 import Foundation
 
-static IOTools{
+public struct IOTools{
+    
+    // read a file and transform it to String
     public static func readFile(fileName: String) -> String{
         do {
             let contents = try NSString(contentsOfFile: fileName, encoding: 4)
@@ -18,4 +20,6 @@ static IOTools{
             return "not loaded"
         }
     }
+    
+    
 }
