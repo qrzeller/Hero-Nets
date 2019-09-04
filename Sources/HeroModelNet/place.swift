@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Places have a type of token T. That must be Comparable and Equatable
 public struct Place<T: Equatable & Comparable>: CustomStringConvertible {
     public var description: String {
         return """
@@ -24,6 +25,7 @@ public struct Place<T: Equatable & Comparable>: CustomStringConvertible {
     // The domain of the tokens (marking)
     let domain: Domain
     
+    // Each place have a domain and tokens of type T inside (see class Tokens)
     public init<I : Sequence>(tokens : I, domain: Domain, name: String) where I.Iterator.Element == T {
         self.tokens = Tokens(tokens: tokens)
         self.name = name

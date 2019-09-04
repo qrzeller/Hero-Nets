@@ -7,6 +7,9 @@
 
 import Foundation
 
+// The arc that goes inside a transition
+// It's different from ArcOut as arc out comport labels that we need to evaluate at some point
+// Here are only bindings
 public struct ArcIn<T: Equatable & Comparable>: CustomStringConvertible{
     public var description: String{
         return """
@@ -16,12 +19,13 @@ public struct ArcIn<T: Equatable & Comparable>: CustomStringConvertible{
                 Binding : \(bindName)
         """
     }
-    
+    // The place that is connected to the arc
     public var connectedPlace: Place<T>
 
     let bindName: [String]
     let name : String
     
+    // label : the label of the arc (a binding here),
     public init(label: String, connectedPlace: Place<T>, name: String = "") {
         
         self.bindName = label.components(separatedBy: CharacterSet([" ", ",", "\t", "\n",])).filter { $0 != "" }
@@ -51,7 +55,6 @@ public struct ArcIn<T: Equatable & Comparable>: CustomStringConvertible{
     }
     
     //MARK: Getter Setter
-    
     public func getBindName() -> [String]{
         return bindName
     }

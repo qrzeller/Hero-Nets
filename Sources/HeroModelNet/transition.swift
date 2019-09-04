@@ -7,6 +7,9 @@
 
 import Foundation
 
+// The transition hold the arcs and is responsible to fire.
+// It check the guards as well
+// A function reset state permit to go back in time (only one fire)
 public struct Transition<In: Equatable & Comparable, Out: Equatable & Comparable>{
 
     let transitionGuard: [([String: In]) -> Bool]//([In]) -> Bool
@@ -92,7 +95,11 @@ public struct Transition<In: Equatable & Comparable, Out: Equatable & Comparable
         return bindings
     }
     
-    
+    // This function fire a transition
+    // - get token corresponding to bindings
+    // - do not fire if :
+    // - - Guard fail
+    // - - Not enought Tokens
     public mutating func fire() -> Bool{
         if !enabled{ return false }
         
@@ -127,6 +134,11 @@ public struct Transition<In: Equatable & Comparable, Out: Equatable & Comparable
     }
     
     // Fire with pre defined tokens (manual fire)
+    // This function fire a transition
+    // - get token corresponding to bindings
+    // - do not fire if :
+    // - - Guard fail
+    // - - Not enought Tokens
     public mutating func fire(manualToken : [String: In]) -> Bool{
         if !enabled{ return false }
         if manualToken.count != existingBindings.count {
@@ -171,7 +183,7 @@ public struct Transition<In: Equatable & Comparable, Out: Equatable & Comparable
         self.lastExecutedTokenIn.removeAll()// for trace and reset (marking)
         self.lastExecutedTokenOut.removeAll()// for trace and reset (marking)
 
-        for f in transitionGuard{
+        for f in transitionGuard{ // guards are multiset of guard
             if !f(executedToken) {
                 print("📙 The guard failed")
                 self.resetState(tokens: executedToken)
@@ -181,6 +193,7 @@ public struct Transition<In: Equatable & Comparable, Out: Equatable & Comparable
         return true
     }
     
+    // Execute an arc label. For this we need the bindings
     private mutating func execOutArcs(executedToken: [String: In]){
         for var i in arcsOut{
             let outMark = i.execute(transitionParams: executedToken)

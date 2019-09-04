@@ -9,9 +9,15 @@ import Foundation
 import HeroModelNet
 import GeneralTools
 
+// This class intend to factorise our petriNet (transition and places)
+// It's only for String types
+// It does also calculate the markings
 public class PetriNet{
+    
+    // hero type
     public enum netType{
         case hero
+        // case future High order net
     }
     
     let type : netType
@@ -19,6 +25,8 @@ public class PetriNet{
     public var places = [String: Place<String>]()
     public var transitions = [String: Transition<String, String>]()
 
+    // You may cal without arguments. Thoses are public structures.
+    // Especially if you use the loadDefinitionFile function that construct them for you.
     public init(places: [Place<String>] = [Place<String>](),transitions: [Transition<String, String>] = [Transition<String, String>]() , commonName: String = "" ,type: netType = .hero) {
         self.type = type
         self.commonName = commonName
@@ -79,6 +87,8 @@ public class PetriNet{
     }
     
     
+    // Run at random the transition.
+    // Return false if fire could not be performed
     public func randomRun(count: Int = 1) -> Bool{
         for _ in 0..<count{
             var t = transitions.values.randomElement()
@@ -88,29 +98,15 @@ public class PetriNet{
         }
         return true
     }
+    // run with manual binding. Key are name of binding variable, value are the tokens value.
+    // return true if fire succeed. return nil if transition does not exist
     public func manualRun(transitionName : String, binding: [String:String]) -> Bool?{
         return transitions[transitionName]?.fire(manualToken: binding)
     }
     
-    public func startDefinitionTest(){
-        print("----------- Test run -----------")
-        for var t in transitions{
-            print("Run transition : \(t.value.getName()) ➡")
-            _ = t.value.fire(manualToken: [
-                "a":"2",
-                "b":"3",
-                "c":"sub"
-                ])
-        }
-        print("Random fire : ➡")
-        _ = transitions["t1"]?.fire()
-        print(places["p1"]!)
-        print(places["p2"]!)
-        print(places["p3"] ?? "Place p3 does not exist")
-    }
-    
+    // Calculate the Markings (not the binding)
+    // In other words, how much state are possible in our Petri Net.
     public func marking() -> Set<[String : [String]]>{
-        print("-- Marking mode : ")
         
         // store markings
         var markings: Set = [getMarking()]
@@ -134,8 +130,10 @@ public class PetriNet{
                         bindingsByArcs.append(bindings)
                     }
 
+                    // caluclate the cartesian product between all the bindings by arcs.
                     let comb = Combinatorix.cardProd(array: tokensByArcs)
                     
+                    // Create a dictionnary (before we supposed an order of binding)
                     func makeDict(tokens:[String]) -> [String: String]{
                         var res = [String:String]()
                         let bind:[String] = Array(bindingsByArcs.joined())
@@ -145,13 +143,14 @@ public class PetriNet{
                         return res
                     }
                     
-                    //Evaluate
+                    //Evaluate function
                     func evaluate(select: [String: String]){
                         if (t.value.fire(manualToken: select)){
                             markings.insert(getMarking())
                             t.value.resetState()}
                     }
                     
+                    // Evaluate all the combinatoire
                     for c in comb{
                         let binding = makeDict(tokens: c)
                         evaluate(select: binding)

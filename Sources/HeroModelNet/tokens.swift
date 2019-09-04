@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Tokens are in fact a datastructure holding token of type T Equatable and Comparable.
 public class Tokens<T: Equatable & Comparable>: CustomStringConvertible{
     public var description: String { return tokens.sorted().description }
     // todo MARKING

@@ -8,6 +8,7 @@ import Foundation
 import Interpreter
 
 // some function / closure to use for the labels of arcs
+// Thoses may be defined by the user. This is only examples
 public struct LabelTools{
     
     // replace dynamically the opération
@@ -39,6 +40,7 @@ public struct LabelTools{
     }
     
     // Basic function, example function if you want to personalise the labels execution
+    // To use with arcs definition directly
     public static let opNoCurry = { (t: [String: String], interpreter: Interpreter) -> String? in
         let code: String = "operationNoCurry(a: \(t["a"]!), b: \(t["b"]!) , op: \(t["c"]!))"
         let value = try! interpreter.eval(string: code)

@@ -7,6 +7,7 @@
 
 import Foundation
 
+// The domain that define The places token types.
 public struct Domain{
     private let domainCardinality : Int
     private let domainSet: String

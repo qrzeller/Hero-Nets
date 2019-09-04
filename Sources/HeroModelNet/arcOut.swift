@@ -7,6 +7,8 @@
 
 import Foundation
 
+// The arc that goes outise the transition
+// Comport two types PlaceIn and PlacOut. (The types before and after evaluation).
 public struct ArcOut<PlaceIn: Equatable & Comparable, PlaceOut: Equatable & Comparable>: CustomStringConvertible{
 
     public var description: String{
@@ -24,6 +26,8 @@ public struct ArcOut<PlaceIn: Equatable & Comparable, PlaceOut: Equatable & Comp
     let debugLabel: [String]
     let name : String
     
+    // Here the label is a closure we can evaluate/execute. Produce a PlaceOut? type
+    // They may be multiple labels to execute (multiset)
     public init(label: [([String: PlaceIn]) -> PlaceOut?], debugLabel:[String] = [String](), connectedPlace:  Place<PlaceOut>, name: String = "") {
         self.label          = label
         self.name           = name
