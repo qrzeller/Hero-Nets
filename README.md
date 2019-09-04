@@ -7,9 +7,9 @@ It use librairies from [AlpineLang](https://github.com/kyouko-taiga/AlpineLang) 
 The build command take care of the import.
 
 ## How to build ?
-You can build with the terminal using : `swift build`
-You can generate an XCode package : `swift package generate-xcodeproj`
-You can test in XCode or by terminal : `swift test`
+You can build with the terminal using : `swift build`  
+Then you can generate an XCode package : `swift package generate-xcodeproj`  
+You can test in XCode or by terminal : `swift test`  
 
 ## How to use ?
 
