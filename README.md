@@ -24,7 +24,8 @@ This closure is of the form : `([String : String], String) -> String?)`
 1. The first parameter is a dictionnary key value. The key is the name of the binding, the value is the actual value binded.
 2. The second parameter is the label of some arc.
 2. You can the call :  
-`let p = PetriNet()  <br/>
+`let p = PetriNet()  
+
 p.loadDefinitionFile(path: fileDef, labelExecution: labelExecution)`  
 We create the Petri Net class (Which accept only String expression)
 And the we load the definition file, with the path : fileDef  
