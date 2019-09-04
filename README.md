@@ -2,7 +2,7 @@
 This repository aim to model a HeroNet in the Swift language from a definition file.
 
 ## Informations
-The language used is *Swift 5.2* and compiled using Xcode IDE.
+The language used is *Swift 5.2* and compiled using Xcode IDE or Swift Package Manager.
 It use librairies from [AlpineLang](https://github.com/kyouko-taiga/AlpineLang) and the exemple interpreter of the expression is Alpine.
 The build command take care of the import.
 
